@@ -34,13 +34,15 @@ namespace LighterEdit.UI
             return new DialogGUIBase[]
             {
                 new DialogGUIVerticalLayout(GetWidth(), -1f,
-                    new DialogGUIButton("Close all", OnCloseAll, false),
-                    new DialogGUIButton("Orbit Editor", OnOrbitEditor, false),
-                    new DialogGUIButton("Planet Editor", OnPlanetEditor, false),
-                    new DialogGUIButton("Ship Lander", OnShipLander, false),
-                    new DialogGUIButton("Misc Tools", OnMiscTools, false),
-                    new DialogGUIButton("KSP Debug Menu", OnDebugMenu, false)
-                ) { stretchWidth = true }
+                    Tooltip(new DialogGUIButton("Close all", OnCloseAll, false), "Closes all windows"),
+                    Tooltip(new DialogGUIButton("Orbit Editor", OnOrbitEditor, false), "Opens the Orbit Editor window"),
+                    Tooltip(new DialogGUIButton("Planet Editor", OnPlanetEditor, false),
+                        "Opens the Planet Editor window"),
+                    Tooltip(new DialogGUIButton("Ship Lander", OnShipLander, false), "Opens the Ship Lander window"),
+                    Tooltip(new DialogGUIButton("Misc Tools", OnMiscTools, false), "Opens the Misc Tools window"),
+                    Tooltip(new DialogGUIButton("KSP Debug Menu", OnDebugMenu, false),
+                        "Opens the KSP Debug Toolbar (also available with Mod+F12)")
+                ) {stretchWidth = true}
             };
         }
 
@@ -51,11 +53,16 @@ namespace LighterEdit.UI
         private void OnCloseAll()
         {
             Menu.Instance.Close();
+            OrbitEditor.Instance.Close();
         }
 
         private void OnOrbitEditor()
         {
-            
+            // Open or close the orbit editor
+            if (!OrbitEditor.Instance.IsOpen)
+                OrbitEditor.Instance.Open();
+            else
+                OrbitEditor.Instance.ToggleVisibility();
         }
 
         private void OnPlanetEditor()
